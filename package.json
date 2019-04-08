@@ -4,10 +4,14 @@
   "description": "",
   "author": "",
   "license": "MIT",
+  "main": "dist/form/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
+    "prestart": "",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:docker": "",
+    "stop:docker": "",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
@@ -24,9 +28,13 @@
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/platform-express": "^6.0.0",
+    "@nestjs/swagger": "^3.0.2",
+    "@pardjs/common": "^1.0.2",
+    "class-validator": "^0.9.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
