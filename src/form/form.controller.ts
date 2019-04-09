@@ -1,4 +1,4 @@
-import { Controller, Body, Post, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Post, Get, HttpStatus, Param } from '@nestjs/common';
 import { SubmitFormDto } from './dtos/submit-form.dto';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { SubmitFormResDto } from './dtos/submit-form-res.dto';
@@ -12,12 +12,12 @@ interface StandError {
   message: string;
 }
 
-@Controller('api/form')
+@Controller('api')
 @ApiUseTags('Form')
 export class FormController {
   constructor(private readonly formService: FormService) {}
 
-  @Post('/')
+  @Post('/form')
   @ApiResponse({
     status: HttpStatus.CREATED,
     type: SubmitFormResDto,
@@ -30,5 +30,10 @@ export class FormController {
     return {
       status: 'success',
     };
+  }
+
+  @Get('clients/:clientId/form-records')
+  async getRecords(@Param('clientId') clientId: string): Promise<any> {
+    return await this.formService.findAllById(clientId);
   }
 }
