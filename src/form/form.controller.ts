@@ -26,9 +26,10 @@ export class FormController {
     @Body() data: SubmitFormDto,
   ): Promise<SubmitFormResDto | ErrorResDto | any> {
     logger.debug('submit form', data);
-    await this.formService.submit(data);
+    const sendRes = await this.formService.submit(data);
     return {
       status: 'success',
+      data: sendRes,
     };
   }
 
