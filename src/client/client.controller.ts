@@ -9,7 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
-import { ClientService, Client } from '.';
+import { ClientService, ClientEntity } from '.';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { CreateClientResDto } from './dtos/create-client-res.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
@@ -25,11 +25,12 @@ export class ClientController {
   @Post('/clients')
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: Client,
+    type: ClientEntity,
   })
-  async create(@Body() data: CreateClientDto): Promise<Client | ErrorResDto> {
-    // return await this.clientService.create(data);
-    return;
+  async create(
+    @Body() data: CreateClientDto,
+  ): Promise<ClientEntity | ErrorResDto> {
+    return await this.clientService.create(data);
   }
 
   @Put('/clients/:id')
