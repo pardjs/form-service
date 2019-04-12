@@ -1,11 +1,6 @@
+import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
+
 import { EntityParent, logger } from '@pardjs/common';
-import {
-  Entity,
-  Column,
-  Index,
-  PrimaryGeneratedColumn,
-  BeforeInsert,
-} from 'typeorm';
 
 @Entity()
 export class ConfigEntity extends EntityParent {

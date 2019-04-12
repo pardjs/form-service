@@ -1,8 +1,8 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
-export class UpdateClientDto {
+export class SubmitResponseDto {
   @ApiModelProperty()
-  readonly clientId: string;
+  readonly configId: string;
   readonly token?: string;
   readonly [x: string]: any;
 }

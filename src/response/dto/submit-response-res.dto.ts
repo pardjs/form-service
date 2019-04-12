@@ -13,7 +13,7 @@ export class SubmitResponseResDto {
     example: '',
   })
   status: Status;
-  readonly clientId: string;
+  readonly configId: string;
   readonly token?: string;
   readonly [x: string]: any;
 }

@@ -10,9 +10,9 @@ import Recaptcha from '@pardjs/recaptcha-server';
 import Notification from '@pardjs/notification';
 import { logger } from '@pardjs/common';
 
-import { EnvService } from 'src/env';
+import { EnvService } from '../env';
 import { ResponseEntity, ERRORS } from '.';
-import { SubmitResponseDto } from './dtos/submit-response.dto';
+import { SubmitResponseDto } from './dto';
 
 @Injectable()
 export class ResponseService {
@@ -50,7 +50,7 @@ export class ResponseService {
         }
       }
       // 保存请求成功的记录
-      const removedKeys = ['token', 'clientId'];
+      const removedKeys = ['token', 'configId'];
       const record = Object.keys(data).reduce((recordInfo, key) => {
         if (!removedKeys.includes(key)) {
           recordInfo[key] = data[key];
@@ -58,7 +58,7 @@ export class ResponseService {
         return recordInfo;
       }, {});
       await this.responseRepository.save({
-        clientId: data.clientId,
+        configId: data.configId,
         content: record,
       });
       // 发送邮件通知
@@ -78,10 +78,10 @@ export class ResponseService {
     }
   }
 
-  // [internal] 获取某个client的全部留言
-  async findAllById(clientId: string): Promise<any> {
+  // [internal] 获取某个config的全部留言
+  async findAllById(configId: string): Promise<any> {
     const [data, total] = await this.responseRepository.findAndCount({
-      where: { clientId },
+      where: { configId },
     });
     return {
       total,

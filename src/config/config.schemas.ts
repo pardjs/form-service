@@ -2,7 +2,7 @@ import { ValidationSchema } from 'class-validator';
 
 export const SCHEMAS: ValidationSchema[] = [
   {
-    name: 'CREATE_CLIENT_SCHEMA',
+    name: 'CREATE_CONFIG_SCHEMA',
     properties: {
       name: [
         {

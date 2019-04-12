@@ -1,6 +1,6 @@
 import { ApiModelProperty, ApiResponseModelProperty } from '@nestjs/swagger';
 
-export class CreateClientResDto {
+export class CreateConfigResDto {
   @ApiResponseModelProperty({
     example: '1',
   })

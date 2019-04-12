@@ -1,10 +1,9 @@
 import { Controller, Body, Post, Get, HttpStatus, Param } from '@nestjs/common';
-import { SubmitResponseDto } from './dtos/submit-response.dto';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
-import { SubmitResponseResDto } from './dtos/submit-response-res.dto';
-import { ErrorResDto } from './dtos/error-res.dot';
+
 import { logger } from '@pardjs/common';
 
+import { ErrorResDto, SubmitResponseDto, SubmitResponseResDto } from './dto';
 import { ResponseService } from '.';
 
 @Controller('api')
@@ -26,8 +25,8 @@ export class ResponseController {
       data: sendRes,
     };
   }
-  @Get('clients/:clientId/responses')
-  async getRecords(@Param('clientId') clientId: string): Promise<any> {
-    return await this.responseService.findAllById(clientId);
+  @Get('configs/:configId/responses')
+  async getRecords(@Param('configId') configId: string): Promise<any> {
+    return await this.responseService.findAllById(configId);
   }
 }

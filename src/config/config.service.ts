@@ -4,16 +4,15 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateClientDto } from './dtos/create-client.dto';
-import { ErrorResDto } from './dtos/error-res.dot';
-import { EnvService } from 'src/env';
 import { Repository, InsertResult, UpdateResult } from 'typeorm';
-import { ConfigEntity } from '.';
-import { logger } from '@pardjs/common';
-import Hashids from 'hashids';
 import { registerSchema, ValidationSchema, validate } from 'class-validator';
-import { ERRORS } from './config.errors';
-import { SCHEMAS } from './config.schemas';
+import Hashids from 'hashids';
+
+import { logger } from '@pardjs/common';
+
+import { EnvService } from '../env';
+import { ErrorResDto, CreateConfigDto } from './dto';
+import { ConfigEntity, ERRORS, SCHEMAS } from '.';
 
 @Injectable()
 export class ConfigService {
@@ -23,7 +22,7 @@ export class ConfigService {
   constructor(
     config: EnvService,
     @InjectRepository(ConfigEntity)
-    private readonly clientRepository: Repository<ConfigEntity>,
+    private readonly configRepository: Repository<ConfigEntity>,
   ) {
     // TODO: 拆分到common
     // // 注册schema
@@ -33,9 +32,9 @@ export class ConfigService {
     // }
   }
 
-  async create(data: CreateClientDto): Promise<ConfigEntity | ErrorResDto> {
+  async create(data: CreateConfigDto): Promise<ConfigEntity | ErrorResDto> {
     // TODO: 拆分到common
-    // const errors = await validate('CREATE_CLIENT_SCHEMA', data);
+    // const errors = await validate('CREATE_CONFIG_SCHEMA', data);
     // if (errors.length > 0) {
     //   console.log('Validate error', { errors: JSON.stringify(errors) });
     //   throw new BadRequestException();
@@ -51,17 +50,17 @@ export class ConfigService {
       }
     }
 
-    const client: ConfigEntity = await this.clientRepository.save(data);
+    const config: ConfigEntity = await this.configRepository.save(data);
 
     // TODO: Improve, use triggered beforeInsert auto inject the hashId
-    await this.clientRepository.update(client.id, {
+    await this.configRepository.update(config.id, {
       hashId: this.hashids.encode(
-        ...String(client.id)
+        ...String(config.id)
           .split('')
           .map(item => Number(item)),
       ),
     });
 
-    return await this.clientRepository.findOne(client.id);
+    return await this.configRepository.findOne(config.id);
   }
 }

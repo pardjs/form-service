@@ -9,49 +9,52 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+
+import {
+  ErrorResDto,
+  CreateConfigDto,
+  CreateConfigResDto,
+  UpdateConfigDto,
+  UpdateConfigResDto,
+  FindAllConfigResDto,
+} from './dto';
 import { ConfigService, ConfigEntity } from '.';
-import { CreateClientDto } from './dtos/create-client.dto';
-import { CreateClientResDto } from './dtos/create-client-res.dto';
-import { UpdateClientDto } from './dtos/update-client.dto';
-import { UpdateClientResDto } from './dtos/update-client-res.dto';
-import { FindAllClientResDto } from './dtos/findall-client-res.dto';
-import { ErrorResDto } from './dtos/error-res.dot';
 
 @Controller('api')
-@ApiUseTags('Client')
-export class ClientController {
-  constructor(private readonly clientService: ConfigService) {}
+@ApiUseTags('Config')
+export class ConfigController {
+  constructor(private readonly configService: ConfigService) {}
 
-  @Post('/clients')
+  @Post('/configs')
   @ApiResponse({
     status: HttpStatus.CREATED,
     type: ConfigEntity,
   })
   async create(
-    @Body() data: CreateClientDto,
+    @Body() data: CreateConfigDto,
   ): Promise<ConfigEntity | ErrorResDto> {
-    return await this.clientService.create(data);
+    return await this.configService.create(data);
   }
 
-  @Put('/clients/:id')
+  @Put('/configs/:id')
   async update(
-    @Param('id') clientId: string,
-    @Body() data: UpdateClientDto,
-  ): Promise<UpdateClientResDto> {
+    @Param('id') configId: string,
+    @Body() data: UpdateConfigDto,
+  ): Promise<UpdateConfigResDto> {
     return {};
   }
 
-  @Get('clients')
-  async findAll(): Promise<FindAllClientResDto> {
+  @Get('configs')
+  async findAll(): Promise<FindAllConfigResDto> {
     return {};
   }
 
-  @Get('clients/:id')
-  async find(): Promise<FindAllClientResDto> {
+  @Get('configs/:id')
+  async find(): Promise<FindAllConfigResDto> {
     return {};
   }
 
-  @Delete('clients/:id')
+  @Delete('configs/:id')
   async delete(): Promise<void | ErrorResDto> {
     return;
   }
