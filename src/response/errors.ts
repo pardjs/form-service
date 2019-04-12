@@ -1,4 +1,4 @@
-export const FORM_ERRORS = {
+export const ERRORS = {
   NOT_VALID_HUMAN: {
     type: 'NOT_VALID_HUMAN',
     message: {

@@ -125,10 +125,10 @@
     md5 "^2.2.1"
     querystring "^0.2.0"
 
-"@pardjs/recaptcha-server@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@pardjs/recaptcha-server/-/recaptcha-server-0.1.1.tgz#094b89c92c505e5b6518c302d6626c2366f6a772"
-  integrity sha512-Dr3Dvpqe6/YUKyTGiIvATc+4ncsLaGiGe+vMBgyUhSA7aINRdfxU+NhPqjtBa8bsXuCb+8QwWI64mv7F3EwuyA==
+"@pardjs/recaptcha-server@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pardjs/recaptcha-server/-/recaptcha-server-0.2.0.tgz#e0e57b288da0d2fc42f23b91677747a475968370"
+  integrity sha512-Twv9UJ2ktqnui1uGMKY2OjI1b+sXrToC74utJHgGRBRpOWJV9kfW1VWdEhMCBDzH1qhE4pw4mT+XSTf5/EUBDQ==
   dependencies:
     axios "^0.18.0"
 
@@ -168,6 +168,13 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/hashids@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@types/hashids/-/hashids-1.0.30.tgz#c0a056b25c5b13c80bf330fb8d379ac4d4049999"
+  integrity sha512-ESXJxz/GRY+SGa3n0WuWZLR0xM3k8LTr4+2xOoj/a0ZThglF/UfEeKVaMQNNFvFQ+mw3ng8LbC3gmJx/GmR5EQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/jest-diff@*":
   version "20.0.1"
@@ -2217,6 +2224,11 @@ has@^1.0.1, has@^1.0.3:
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
   dependencies:
     function-bind "^1.1.1"
+
+hashids@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/hashids/-/hashids-1.2.2.tgz#28635c7f2f7360ba463686078eee837479e8eafb"
+  integrity sha512-dEHCG2LraR6PNvSGxosZHIRgxF5sNLOIBFEHbj8lfP9WWmu/PWPMzsip1drdVSOFi51N2pU7gZavrgn7sbGFuw==
 
 highlight.js@^9.6.0:
   version "9.15.6"

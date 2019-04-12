@@ -5,7 +5,7 @@ enum Status {
   error,
 }
 
-export class SubmitFormResDto {
+export class SubmitResponseResDto {
   @ApiModelProperty({
     type: Status,
     enum: Status,

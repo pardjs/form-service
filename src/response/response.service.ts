@@ -2,31 +2,29 @@ import {
   Injectable,
   BadRequestException,
   InternalServerErrorException,
-  Inject,
 } from '@nestjs/common';
-import { SubmitFormDto } from './dtos/submit-form.dto';
-// FIXME: fix the package and improt '@pardjs/recaptcha-server'
-import Recaptcha from '@pardjs/recaptcha-server/dist/lib/recaptcha-server.js';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import Recaptcha from '@pardjs/recaptcha-server';
 import Notification from '@pardjs/notification';
 import { ConfigService } from 'src/config/config.service';
 import { logger } from '@pardjs/common';
-import { Repository } from 'typeorm';
 
-import { getConnection } from 'typeorm';
-
-import { FORM_ERRORS } from './errors';
-import { FormRecord } from './form-record.entity';
+import { ERRORS } from './errors';
+import { ResponseEntity } from '.';
+import { SubmitResponseDto } from './dtos/submit-response.dto';
 
 @Injectable()
-export class FormService {
+export class ResponseService {
   private readonly recaptcha: Recaptcha;
   private notify: Notification;
   private readonly senderAddress: string;
 
   constructor(
     config: ConfigService,
-    @Inject('FORM_REPOSITORY')
-    private readonly formRepository: Repository<FormRecord>,
+    @InjectRepository(ResponseEntity)
+    private readonly responseRepository: Repository<ResponseEntity>,
   ) {
     this.senderAddress = config.get('SEND_EMAIL_ADDRESS');
     this.recaptcha = new Recaptcha(config.get('RECAPTCHA_SECRET'), 3000);
@@ -40,7 +38,7 @@ export class FormService {
     });
   }
 
-  async submit(data: SubmitFormDto): Promise<any> {
+  async submit(data: SubmitResponseDto): Promise<any> {
     try {
       // TODO: fetch config
       // TODO: enable validation reCaptcha by config.
@@ -49,7 +47,7 @@ export class FormService {
         const verifyResult = await this.recaptcha.verifyV3Async(data.token);
         if (!verifyResult.isPassed) {
           logger.info('Invalid reCaptcha result', { data, verifyResult });
-          throw new BadRequestException(FORM_ERRORS.NOT_VALID_HUMAN);
+          throw new BadRequestException(ERRORS.NOT_VALID_HUMAN);
         }
       }
       // 保存请求成功的记录
@@ -60,7 +58,7 @@ export class FormService {
         }
         return recordInfo;
       }, {});
-      await this.formRepository.save({
+      await this.responseRepository.save({
         clientId: data.clientId,
         content: record,
       });
@@ -77,15 +75,13 @@ export class FormService {
     } catch (error) {
       // TODO: Add sentry
       logger.error('Failed to send email', { error });
-      throw new InternalServerErrorException(
-        FORM_ERRORS.FORM_SUBMIT_INTERNAL_ERROR,
-      );
+      throw new InternalServerErrorException(ERRORS.FORM_SUBMIT_INTERNAL_ERROR);
     }
   }
 
   // [internal] 获取某个client的全部留言
   async findAllById(clientId: string): Promise<any> {
-    const [data, total] = await this.formRepository.findAndCount({
+    const [data, total] = await this.responseRepository.findAndCount({
       where: { clientId },
     });
     return {

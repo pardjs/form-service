@@ -2,14 +2,14 @@ import { EntityParent } from '@pardjs/common';
 import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class FormRecord extends EntityParent {
+export class ResponseEntity extends EntityParent {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Index()
-  @Column()
+  @Column({ name: 'client_id' })
   clientId: string;
 
-  @Column('jsonb')
+  @Column({ type: 'jsonb' })
   content: object;
 }
