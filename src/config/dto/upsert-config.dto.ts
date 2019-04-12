@@ -10,7 +10,7 @@ import {
   Matches,
 } from 'class-validator';
 
-export class CreateConfigDto {
+export class UpsertConfigDto {
   @ApiModelProperty({
     description: '名称标识。',
     example: '雅客食品',

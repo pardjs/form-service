@@ -1,10 +1,10 @@
-import { ApiModelProperty, ApiResponseModelProperty } from '@nestjs/swagger';
+import { ApiResponseModelProperty } from '@nestjs/swagger';
 
-export class CreateConfigResDto {
+export class ConfigResDto {
   @ApiResponseModelProperty({
-    example: '1',
+    example: 1,
   })
-  readonly id: string;
+  readonly id: number;
   @ApiResponseModelProperty({
     example: 'yLA6m0oM',
   })

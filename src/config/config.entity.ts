@@ -1,9 +1,9 @@
 import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-import { EntityParent, logger } from '@pardjs/common';
+import { EntityParent as TimeEntity } from '@pardjs/common';
 
 @Entity()
-export class ConfigEntity extends EntityParent {
+export class ConfigEntity extends TimeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
