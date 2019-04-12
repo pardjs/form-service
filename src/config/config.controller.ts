@@ -9,7 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
-import { ClientService, ClientEntity } from '.';
+import { ConfigService, ConfigEntity } from '.';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { CreateClientResDto } from './dtos/create-client-res.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
@@ -20,16 +20,16 @@ import { ErrorResDto } from './dtos/error-res.dot';
 @Controller('api')
 @ApiUseTags('Client')
 export class ClientController {
-  constructor(private readonly clientService: ClientService) {}
+  constructor(private readonly clientService: ConfigService) {}
 
   @Post('/clients')
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: ClientEntity,
+    type: ConfigEntity,
   })
   async create(
     @Body() data: CreateClientDto,
-  ): Promise<ClientEntity | ErrorResDto> {
+  ): Promise<ConfigEntity | ErrorResDto> {
     return await this.clientService.create(data);
   }
 

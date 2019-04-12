@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from './config.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EnvModule } from 'src/env';
+
+import { ClientController, ConfigService, ConfigEntity } from '.';
 
 @Module({
-  providers: [
-    {
-      provide: ConfigService,
-      useValue: new ConfigService(
-        `${process.env.NODE_ENV || 'development'}.env`,
-      ),
-    },
-  ],
-  exports: [ConfigService],
+  imports: [EnvModule, TypeOrmModule.forFeature([ConfigEntity])],
+  controllers: [ClientController],
+  providers: [ConfigService],
 })
 export class ConfigModule {}

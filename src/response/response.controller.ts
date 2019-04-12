@@ -7,16 +7,10 @@ import { logger } from '@pardjs/common';
 
 import { ResponseService } from '.';
 
-interface StandError {
-  type?: string;
-  message: string;
-}
-
 @Controller('api')
 @ApiUseTags('Response')
 export class ResponseController {
   constructor(private readonly responseService: ResponseService) {}
-
   @Post('/responses')
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -32,7 +26,6 @@ export class ResponseController {
       data: sendRes,
     };
   }
-
   @Get('clients/:clientId/responses')
   async getRecords(@Param('clientId') clientId: string): Promise<any> {
     return await this.responseService.findAllById(clientId);

@@ -1,8 +1,8 @@
-import { EntityParent } from '@pardjs/common';
+import { EntityParent as TimeEntity } from '@pardjs/common';
 import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class ResponseEntity extends EntityParent {
+export class ResponseEntity extends TimeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

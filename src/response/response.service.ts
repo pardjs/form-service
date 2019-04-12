@@ -8,11 +8,10 @@ import { Repository } from 'typeorm';
 
 import Recaptcha from '@pardjs/recaptcha-server';
 import Notification from '@pardjs/notification';
-import { ConfigService } from 'src/config/config.service';
 import { logger } from '@pardjs/common';
 
-import { ERRORS } from './errors';
-import { ResponseEntity } from '.';
+import { EnvService } from 'src/env';
+import { ResponseEntity, ERRORS } from '.';
 import { SubmitResponseDto } from './dtos/submit-response.dto';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class ResponseService {
   private readonly senderAddress: string;
 
   constructor(
-    config: ConfigService,
+    config: EnvService,
     @InjectRepository(ResponseEntity)
     private readonly responseRepository: Repository<ResponseEntity>,
   ) {
