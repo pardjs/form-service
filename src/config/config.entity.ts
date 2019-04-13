@@ -1,6 +1,14 @@
-import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  Index,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 
 import { EntityParent as TimeEntity } from '@pardjs/common';
+
+import { ResponseEntity } from '../response';
 
 @Entity()
 export class ConfigEntity extends TimeEntity {
@@ -34,4 +42,10 @@ export class ConfigEntity extends TimeEntity {
 
   @Column({ name: 'template', nullable: true })
   templateName?: string;
+
+  @OneToMany(
+    () => ResponseEntity,
+    (response: ResponseEntity) => response.config,
+  )
+  responses: ResponseEntity[];
 }

@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -12,7 +8,7 @@ import { logger } from '@pardjs/common';
 
 import { EnvService } from '../env';
 import { ResponseEntity, ERRORS } from '.';
-import { SubmitResponseDto } from './dto';
+import { CreateResponseDto } from './dto';
 
 @Injectable()
 export class ResponseService {
@@ -37,7 +33,7 @@ export class ResponseService {
     });
   }
 
-  async submit(data: SubmitResponseDto): Promise<any> {
+  async create(data: CreateResponseDto): Promise<any> {
     try {
       // TODO: fetch config
       // TODO: enable validation reCaptcha by config.
@@ -46,7 +42,7 @@ export class ResponseService {
         const verifyResult = await this.recaptcha.verifyV3Async(data.token);
         if (!verifyResult.isPassed) {
           logger.info('Invalid reCaptcha result', { data, verifyResult });
-          throw new BadRequestException(ERRORS.NOT_VALID_HUMAN);
+          return new BadRequestException(ERRORS.INVALID_HUMAN);
         }
       }
       // 保存请求成功的记录
@@ -74,18 +70,7 @@ export class ResponseService {
     } catch (error) {
       // TODO: Add sentry
       logger.error('Failed to send email', { error });
-      throw new InternalServerErrorException(ERRORS.FORM_SUBMIT_INTERNAL_ERROR);
+      throw error;
     }
-  }
-
-  // [internal] 获取某个config的全部留言
-  async findAllById(configId: string): Promise<any> {
-    const [data, total] = await this.responseRepository.findAndCount({
-      where: { configId },
-    });
-    return {
-      total,
-      data,
-    };
   }
 }

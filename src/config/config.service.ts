@@ -9,6 +9,7 @@ import { logger } from '@pardjs/common';
 import { EnvService } from '../env';
 import { UpsertConfigDto } from './dto';
 import { ConfigEntity, ERRORS } from '.';
+import { ResponseEntity } from 'src/response';
 
 @Injectable()
 export class ConfigService {
@@ -104,5 +105,12 @@ export class ConfigService {
       logger.error('Failed to remove config', { error });
       throw error;
     }
+  }
+
+  // TODO: pagination
+  async findResponses(configId: string): Promise<ConfigEntity[]> {
+    return await this.configRepository.find({
+      relations: ['responses'],
+    });
   }
 }

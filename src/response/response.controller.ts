@@ -1,10 +1,17 @@
-import { Controller, Body, Post, Get, HttpStatus, Param } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  HttpStatus,
+  HttpException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 
 import { logger } from '@pardjs/common';
 
-import { ErrorResDto, SubmitResponseDto, SubmitResponseResDto } from './dto';
-import { ResponseService } from '.';
+import { CreateResponseDto, ResponseResDto } from './dto';
+import { ResponseService, ERRORS } from '.';
 
 @Controller('api')
 @ApiUseTags('Response')
@@ -13,20 +20,20 @@ export class ResponseController {
   @Post('/responses')
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: SubmitResponseResDto,
+    type: ResponseResDto,
   })
-  async submit(
-    @Body() data: SubmitResponseDto,
-  ): Promise<SubmitResponseResDto | ErrorResDto | any> {
-    logger.debug('submit form', data);
-    const sendRes = await this.responseService.submit(data);
-    return {
-      status: 'success',
-      data: sendRes,
-    };
-  }
-  @Get('configs/:configId/responses')
-  async getRecords(@Param('configId') configId: string): Promise<any> {
-    return await this.responseService.findAllById(configId);
+  async create(
+    @Body() data: CreateResponseDto,
+  ): Promise<ResponseResDto | HttpException> {
+    try {
+      logger.info('Submit response', data);
+      const sendRes = await this.responseService.create(data);
+      return sendRes;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
+      );
+    }
   }
 }

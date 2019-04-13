@@ -13,18 +13,19 @@ import {
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 
 import { UpsertConfigDto, ConfigResDto } from './dto';
-import { ConfigService, ConfigEntity } from '.';
+import { ConfigService, ERRORS } from '.';
 import { FindManyOptions } from 'typeorm';
+import { ResponseResDto } from 'src/response/dto';
 
-@Controller('api')
+@Controller('api/configs')
 @ApiUseTags('Config')
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {}
 
-  @Post('/configs')
+  @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: ConfigEntity,
+    type: ConfigResDto,
   })
   async create(
     @Body() data: UpsertConfigDto,
@@ -34,13 +35,17 @@ export class ConfigController {
       return config;
     } catch (error) {
       return new InternalServerErrorException(
-        'Internal error when find config',
-        error,
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
       );
     }
   }
 
-  @Put('/configs/:id')
+  @Put(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: ConfigResDto,
+  })
   async update(
     @Param('id') configId: string,
     @Body() data: UpsertConfigDto,
@@ -49,13 +54,17 @@ export class ConfigController {
       return await this.configService.update(configId, data);
     } catch (error) {
       return new InternalServerErrorException(
-        'Internal error when update config',
-        error,
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
       );
     }
   }
 
-  @Get('configs')
+  @Get()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [ConfigResDto],
+  })
   async find(
     @Param() option: FindManyOptions,
   ): Promise<ConfigResDto[] | HttpException> {
@@ -63,13 +72,17 @@ export class ConfigController {
       return await this.configService.find(option);
     } catch (error) {
       return new InternalServerErrorException(
-        'Internal error when find config',
-        error,
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
       );
     }
   }
 
-  @Get('configs/:id')
+  @Get(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [ConfigResDto],
+  })
   async findOne(
     @Param('id') configId: string,
   ): Promise<ConfigResDto | HttpException> {
@@ -77,21 +90,39 @@ export class ConfigController {
       return await this.configService.findOne(configId);
     } catch (error) {
       return new InternalServerErrorException(
-        'Internal error when find config',
-        error,
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
       );
     }
   }
 
-  @Delete('configs/:id')
+  @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
   async remove(@Param('id') configId: string): Promise<void | HttpException> {
     try {
       await this.configService.remove(configId);
       return;
     } catch (error) {
       return new InternalServerErrorException(
-        'Internal error when remove config',
-        error,
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
+      );
+    }
+  }
+
+  // TODO: Internal requests.
+  @Get(':id/responses')
+  async getResponses(
+    @Param('id') configId: string,
+  ): Promise<ResponseResDto[] | HttpException> {
+    try {
+      return await this.configService.findResponses(configId);
+    } catch (error) {
+      return new InternalServerErrorException(
+        ERRORS.UNEXPECTED_ERROR,
+        error.message,
       );
     }
   }
