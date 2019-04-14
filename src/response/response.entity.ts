@@ -1,9 +1,9 @@
 import {
   Entity,
   Column,
-  Index,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { EntityParent as TimeEntity } from '@pardjs/common';
@@ -17,6 +17,7 @@ export class ResponseEntity extends TimeEntity {
 
   @Column({ name: 'config_id' })
   @ManyToOne(() => ConfigEntity, (config: ConfigEntity) => config.responses)
+  @JoinColumn({ name: 'config_id' })
   config: ConfigEntity;
 
   @Column({ type: 'jsonb' })
