@@ -65,6 +65,14 @@ export class UpsertConfigDto {
   readonly isValidateRequired?: boolean;
 
   @ApiModelPropertyOptional({
+    description: '是否使用防机器人验证。',
+    example: true,
+    default: false,
+  })
+  @IsBoolean()
+  readonly isReCaptchaRequired?: boolean;
+
+  @ApiModelPropertyOptional({
     description: '发件人名称',
     example: '合作联系通知',
   })
@@ -80,6 +88,13 @@ export class UpsertConfigDto {
   // FIXME: IsIn not working as expected.
   @IsIn(['contact@do021.com'])
   readonly senderEmail?: string;
+
+  @ApiModelPropertyOptional({
+    description: '发送邮件标题。',
+    example: '联系通知邮件',
+  })
+  @IsString()
+  readonly mailTitle?: string;
 
   @ApiModelPropertyOptional({
     description: '邮件模版文件名[关于文档说明参见项目README部分]。',

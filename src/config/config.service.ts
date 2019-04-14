@@ -97,6 +97,15 @@ export class ConfigService {
     }
   }
 
+  async findOneByHash(hashId: string): Promise<ConfigEntity> {
+    try {
+      return await this.configRepository.findOne({ hashId });
+    } catch (error) {
+      logger.error('Failed to find one config by hashId', { error });
+      throw error;
+    }
+  }
+
   async remove(configId: string): Promise<void> {
     try {
       await this.configRepository.delete(configId);

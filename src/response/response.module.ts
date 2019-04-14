@@ -3,9 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { EnvModule } from '../env';
 import { ResponseController, ResponseService, ResponseEntity } from '.';
+import { ConfigEntity } from '../config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ResponseEntity]), EnvModule],
+  imports: [
+    TypeOrmModule.forFeature([ResponseEntity, ConfigEntity]),
+    EnvModule,
+  ],
   controllers: [ResponseController],
   providers: [ResponseService],
 })

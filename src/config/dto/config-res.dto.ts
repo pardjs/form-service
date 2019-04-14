@@ -54,6 +54,10 @@ export class ConfigResDto {
   })
   readonly isValidateRequired?: boolean;
   @ApiResponseModelProperty({
+    example: true,
+  })
+  readonly isReCaptchaRequired?: boolean;
+  @ApiResponseModelProperty({
     example: '通知邮件',
   })
   readonly senderName?: string;
@@ -61,6 +65,10 @@ export class ConfigResDto {
     example: 'contact@dozto.com',
   })
   readonly senderEmail?: string;
+  @ApiResponseModelProperty({
+    example: '邮件主题',
+  })
+  mailTitle?: string;
   @ApiResponseModelProperty({
     example: 'yake-contact-us.hbs',
   })

@@ -34,11 +34,17 @@ export class ConfigEntity extends TimeEntity {
   @Column({ name: 'is_validate_required', default: false })
   isValidateRequired?: boolean;
 
+  @Column({ name: 'is_recaptcha_required', default: false })
+  isReCaptchaRequired?: boolean;
+
   @Column({ name: 'sender_name', nullable: true })
   senderName?: string;
 
   @Column({ name: 'sender_email', nullable: true })
   senderEmail?: string;
+
+  @Column({ name: 'mail_title', nullable: true })
+  mailTitle?: string;
 
   @Column({ name: 'template', nullable: true })
   templateName?: string;

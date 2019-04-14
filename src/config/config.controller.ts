@@ -15,7 +15,6 @@ import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService, ERRORS } from '.';
 import { FindManyOptions } from 'typeorm';
-import { ResponseResDto } from 'src/response/dto';
 
 @Controller('api/configs')
 @ApiUseTags('Config')
@@ -116,7 +115,7 @@ export class ConfigController {
   @Get(':id/responses')
   async getResponses(
     @Param('id') configId: string,
-  ): Promise<ResponseResDto[] | HttpException> {
+  ): Promise<ConfigResDto[] | HttpException> {
     try {
       return await this.configService.findResponses(configId);
     } catch (error) {
