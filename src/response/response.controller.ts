@@ -1,17 +1,11 @@
-import {
-  Controller,
-  Body,
-  Post,
-  HttpStatus,
-  HttpException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Controller, Body, Post, Headers, HttpStatus } from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 
 import { logger } from '@pardjs/common';
 
 import { CreateResponseDto, ResponseResDto } from './dto';
 import { ResponseService, ERRORS } from '.';
+import { httpErrorHandler } from '../uilts';
 
 @Controller('api')
 @ApiUseTags('Response')
@@ -24,16 +18,14 @@ export class ResponseController {
   })
   async create(
     @Body() data: CreateResponseDto,
-  ): Promise<ResponseResDto | HttpException> {
+    @Headers('Accept-Language') lang: string,
+  ): Promise<ResponseResDto> {
     try {
       logger.info('Submit response', data);
       const sendRes = await this.responseService.create(data);
       return sendRes;
     } catch (error) {
-      throw new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 }

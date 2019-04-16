@@ -20,8 +20,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-doc', app, document);
 
   // 使用通用的数据验证 pipe
-  // FIXME: fix the validation pipe with no meta info
-  // app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe());
   // 使用通用的错误处理
   app.useGlobalFilters(new HttpExceptionFilter());
 

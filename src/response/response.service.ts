@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -7,7 +7,7 @@ import Notification from '@pardjs/notification';
 import { logger } from '@pardjs/common';
 
 import { EnvService } from '../env';
-import { ResponseEntity, ERRORS } from '.';
+import { ResponseEntity } from '.';
 import { CreateResponseDto } from './dto';
 import { ConfigEntity } from 'src/config';
 

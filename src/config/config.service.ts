@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 import { registerSchema, ValidationSchema } from 'class-validator';
@@ -9,7 +9,6 @@ import { logger } from '@pardjs/common';
 import { EnvService } from '../env';
 import { UpsertConfigDto } from './dto';
 import { ConfigEntity, ERRORS } from '.';
-import { ResponseEntity } from 'src/response';
 
 @Injectable()
 export class ConfigService {
@@ -44,32 +43,31 @@ export class ConfigService {
           registerSchema(data.responseSchema as ValidationSchema);
         } catch (error) {
           logger.info('error', error);
-          // FIXME: 从service里移除http相关内容
-          throw new BadRequestException(
-            ERRORS.INVALID_RESPONSE_VALIDATE_SCHEMA,
+          // FIXME: 从service里移除http相关内容 ERRORS.INVALID_RESPONSE_VALIDATE_SCHEMA
+          throw new Error(
+            ERRORS.INVALID_RESPONSE_VALIDATE_SCHEMA.message['zh-CN'],
           );
         }
       }
 
       const config: ConfigEntity = await this.configRepository.save(data);
-
-      // TODO: Improve, use triggered beforeInsert auto inject the hashId
-      await this.configRepository.update(config.id, {
-        hashId: this.hashids.encode(
-          ...String(config.id)
-            .split('')
-            .map(item => Number(item)),
-        ),
-      });
-
-      return await this.configRepository.findOne(config.id);
+      config.hashId = this.hashids.encode(
+        ...config.id
+          .toString()
+          .split('')
+          .map(item => Number(item)),
+      );
+      return this.configRepository.save(config);
     } catch (error) {
       logger.error('Failed to create config', { error });
       throw error;
     }
   }
 
-  async update(configId: string, data: UpsertConfigDto): Promise<ConfigEntity> {
+  async replaceOne(
+    configId: string,
+    data: UpsertConfigDto,
+  ): Promise<ConfigEntity> {
     try {
       await this.configRepository.update(configId, data);
       return this.configRepository.findOne(configId);
@@ -106,7 +104,7 @@ export class ConfigService {
     }
   }
 
-  async remove(configId: string): Promise<void> {
+  async removeOne(configId: string): Promise<void> {
     try {
       await this.configRepository.delete(configId);
       return;
@@ -117,9 +115,14 @@ export class ConfigService {
   }
 
   // TODO: pagination
-  async findResponses(configId: string): Promise<ConfigEntity[]> {
-    return await this.configRepository.find({
-      relations: ['responses'],
+  async findResponses(
+    configId: string,
+    params: any,
+  ): Promise<[ConfigEntity[], number]> {
+    return await this.configRepository.findAndCount({
+      where: { relations: ['responses'] },
+      take: params.limit || 10,
+      skip: params.skip || 0,
     });
   }
 }

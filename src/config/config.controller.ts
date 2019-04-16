@@ -2,19 +2,20 @@ import {
   Controller,
   Body,
   Post,
+  Headers,
   Get,
   HttpStatus,
   Param,
   Put,
   Delete,
-  HttpException,
-  InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { FindManyOptions } from 'typeorm';
 
 import { UpsertConfigDto, ConfigResDto } from './dto';
-import { ConfigService, ERRORS } from '.';
-import { FindManyOptions } from 'typeorm';
+import { ConfigService } from '.';
+import { httpErrorHandler } from '../uilts';
 
 @Controller('api/configs')
 @ApiUseTags('Config')
@@ -28,15 +29,13 @@ export class ConfigController {
   })
   async create(
     @Body() data: UpsertConfigDto,
-  ): Promise<ConfigResDto | HttpException> {
+    @Headers('Accept-Language') lang: string,
+  ): Promise<ConfigResDto> {
     try {
       const config = await this.configService.create(data);
       return config;
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 
@@ -45,35 +44,32 @@ export class ConfigController {
     status: HttpStatus.OK,
     type: ConfigResDto,
   })
-  async update(
+  async replaceOne(
     @Param('id') configId: string,
     @Body() data: UpsertConfigDto,
-  ): Promise<ConfigResDto | HttpException> {
+    @Headers('Accept-Language') lang: string,
+  ): Promise<ConfigResDto> {
     try {
-      return await this.configService.update(configId, data);
+      return await this.configService.replaceOne(configId, data);
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 
   @Get()
   @ApiResponse({
     status: HttpStatus.OK,
+    isArray: true,
     type: [ConfigResDto],
   })
   async find(
     @Param() option: FindManyOptions,
-  ): Promise<ConfigResDto[] | HttpException> {
+    @Headers('Accept-Language') lang: string,
+  ): Promise<ConfigResDto[]> {
     try {
       return await this.configService.find(option);
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 
@@ -84,14 +80,12 @@ export class ConfigController {
   })
   async findOne(
     @Param('id') configId: string,
-  ): Promise<ConfigResDto | HttpException> {
+    @Headers('Accept-Language') lang: string,
+  ): Promise<ConfigResDto> {
     try {
       return await this.configService.findOne(configId);
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 
@@ -99,30 +93,28 @@ export class ConfigController {
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async remove(@Param('id') configId: string): Promise<void | HttpException> {
+  async removeOne(
+    @Param('id') configId: string,
+    @Headers('Accept-Language') lang: string,
+  ): Promise<void> {
     try {
-      await this.configService.remove(configId);
+      await this.configService.removeOne(configId);
       return;
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 
-  // TODO: Internal requests.
   @Get(':id/responses')
-  async getResponses(
+  async findResponses(
     @Param('id') configId: string,
-  ): Promise<ConfigResDto[] | HttpException> {
+    @Query() query: any,
+    @Headers('Accept-Language') lang: string,
+  ): Promise<[ConfigResDto[], number]> {
     try {
-      return await this.configService.findResponses(configId);
+      return await this.configService.findResponses(configId, query);
     } catch (error) {
-      return new InternalServerErrorException(
-        ERRORS.UNEXPECTED_ERROR,
-        error.message,
-      );
+      httpErrorHandler(error, lang);
     }
   }
 }
