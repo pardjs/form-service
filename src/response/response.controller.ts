@@ -7,18 +7,18 @@ import { CreateResponseDto, ResponseResDto } from './dto';
 import { ResponseService, ERRORS } from '.';
 import { httpErrorHandler } from '../uilts';
 
-@Controller('api')
+@Controller('responses')
 @ApiUseTags('Response')
 export class ResponseController {
   constructor(private readonly responseService: ResponseService) {}
-  @Post('/responses')
+  @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
     type: ResponseResDto,
   })
   async create(
     @Body() data: CreateResponseDto,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<ResponseResDto> {
     try {
       logger.info('Submit response', data);

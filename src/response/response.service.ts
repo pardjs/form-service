@@ -54,7 +54,6 @@ export class ResponseService {
   // FIXME: define the type of response
   async create(data: CreateResponseDto): Promise<any> {
     try {
-      // TODO: fetch config
       const configInfo = await this.configRepository.findOne({
         hashId: data.id,
       });
