@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:11
+    restart: always
+    environment:
+      - POSTGRES_USER=dozto
+      - POSTGRES_PASSWORD=Passw0rd
+      - POSTGRES_DB=form
+    ports:
+      - 5432:5432
