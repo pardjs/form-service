@@ -1,0 +1,10 @@
+.vscode
+db-migration
+docker
+logs
+node_modules
+test
+tools
+.env
+.git
+dist
