@@ -18,5 +18,5 @@ COPY ./yarn.lock /usr/share/pardjs-service
 RUN yarn
 COPY . /usr/share/pardjs-service
 RUN yarn run build
-RUN ls -al
+RUN ls ./dist -al
 CMD yarn run start:prod

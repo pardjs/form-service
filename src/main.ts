@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe, HttpExceptionFilter } from '@pardjs/common';
 
 import { AppModule } from './app.module';
-import * as VERSION from '../version.json';
+import * as VERSION from '../version.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

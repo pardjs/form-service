@@ -1,10 +1,6 @@
 module.exports = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'dozto',
-  password: 'Passw0rd',
-  database: 'form',
-  entities: ['src/**/*.entity{.ts,.js}'],
+  url: process.env.DB_URL,
+  entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: true,
 };

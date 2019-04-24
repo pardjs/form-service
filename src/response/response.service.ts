@@ -9,7 +9,7 @@ import { logger } from '@pardjs/common';
 import { EnvService } from '../env';
 import { ResponseEntity } from '.';
 import { CreateResponseDto } from './dto';
-import { ConfigEntity } from 'src/config';
+import { ConfigEntity } from '../config';
 
 @Injectable()
 export class ResponseService {
