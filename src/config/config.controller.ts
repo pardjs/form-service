@@ -17,7 +17,7 @@ import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService } from '.';
 import { httpErrorHandler } from '../uilts';
 
-@Controller('api/configs')
+@Controller('configs')
 @ApiUseTags('Config')
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {}

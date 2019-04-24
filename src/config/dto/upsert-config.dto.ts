@@ -1,9 +1,11 @@
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import {
+  IsByteLength,
   IsString,
   MinLength,
   MaxLength,
   IsEmail,
+  IsOptional,
   ArrayMaxSize,
   IsBoolean,
   IsIn,
@@ -36,15 +38,20 @@ export class UpsertConfigDto {
       },
     },
   })
+  @IsOptional()
   readonly responseSchema?: object;
 
   @ApiModelPropertyOptional({
     description: '接收通知邮件的列表。',
     example: ['contact@yakefood.com', 'help@yakefood.com'],
   })
-  @IsEmail(null, {
-    each: true,
-  })
+  @IsOptional()
+  @IsEmail(
+    {},
+    {
+      each: true,
+    },
+  )
   @ArrayMaxSize(100)
   readonly notifyMails?: string[];
 
@@ -53,6 +60,7 @@ export class UpsertConfigDto {
     example: true,
     default: false,
   })
+  @IsOptional()
   @IsBoolean()
   readonly isNotifyByMail?: boolean;
 
@@ -61,6 +69,7 @@ export class UpsertConfigDto {
     example: true,
     default: false,
   })
+  @IsOptional()
   @IsBoolean()
   readonly isValidateRequired?: boolean;
 
@@ -69,6 +78,7 @@ export class UpsertConfigDto {
     example: true,
     default: false,
   })
+  @IsOptional()
   @IsBoolean()
   readonly isReCaptchaRequired?: boolean;
 
@@ -76,6 +86,8 @@ export class UpsertConfigDto {
     description: '发件人名称',
     example: '合作联系通知',
   })
+  @IsOptional()
+  @IsByteLength(1, 15)
   @IsString()
   readonly senderName?: string;
 
@@ -83,6 +95,7 @@ export class UpsertConfigDto {
     description: '发送邮件地址[需要再阿里云后台预先配置]。',
     example: 'contact@dozto.com',
   })
+  @IsOptional()
   @IsEmail()
   // FIXME: USE env variable to config the enum values
   // FIXME: IsIn not working as expected.
@@ -93,6 +106,7 @@ export class UpsertConfigDto {
     description: '发送邮件标题。',
     example: '联系通知邮件',
   })
+  @IsOptional()
   @IsString()
   readonly mailTitle?: string;
 
@@ -100,6 +114,7 @@ export class UpsertConfigDto {
     description: '邮件模版文件名[关于文档说明参见项目README部分]。',
     example: 'yake-contact-business.hbs',
   })
+  @IsOptional()
   @Matches(/[A-Za-z0-9-_,s]+.hbs$/)
   readonly templateName?: string;
 }
