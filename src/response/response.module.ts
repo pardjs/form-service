@@ -12,5 +12,6 @@ import { ConfigEntity } from '../config';
   ],
   controllers: [ResponseController],
   providers: [ResponseService],
+  exports: [ResponseService],
 })
 export class ResponseModule {}

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 import { registerSchema, ValidationSchema } from 'class-validator';
@@ -9,6 +9,7 @@ import { logger } from '@pardjs/common';
 import { EnvService } from '../env';
 import { UpsertConfigDto } from './dto';
 import { ConfigEntity, ERRORS } from '.';
+import { ResponseService, ResponseEntity } from '../response';
 
 @Injectable()
 export class ConfigService {
@@ -18,7 +19,9 @@ export class ConfigService {
   constructor(
     config: EnvService,
     @InjectRepository(ConfigEntity)
-    private readonly configRepository: Repository<ConfigEntity>,
+    private readonly configRepository: Repository<ConfigEntity>, //
+    @Inject(forwardRef(() => ResponseService))
+    private readonly responseService: ResponseService,
   ) {
     // TODO: 拆分到common
     // // 注册schema
@@ -116,13 +119,9 @@ export class ConfigService {
 
   // TODO: pagination
   async findResponses(
-    configId: string,
+    configId: number,
     params: any,
-  ): Promise<[ConfigEntity[], number]> {
-    return await this.configRepository.findAndCount({
-      where: { relations: ['responses'] },
-      take: params.limit || 10,
-      skip: params.skip || 0,
-    });
+  ): Promise<[ResponseEntity[], number]> {
+    return this.responseService.queryByConfigId(configId, params);
   }
 }

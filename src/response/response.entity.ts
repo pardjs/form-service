@@ -18,7 +18,7 @@ export class ResponseEntity extends TimeEntity {
   @Column({ name: 'config_id' })
   @ManyToOne(() => ConfigEntity, (config: ConfigEntity) => config.responses)
   @JoinColumn({ name: 'config_id' })
-  config: ConfigEntity;
+  config: ConfigEntity | number;
 
   @Column({ type: 'jsonb' })
   content: object;
