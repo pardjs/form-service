@@ -16,6 +16,7 @@ import { FindManyOptions } from 'typeorm';
 import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService } from '.';
 import { httpErrorHandler } from '../uilts';
+import { ResponseResDto } from '../response/dto';
 
 @Controller('configs')
 @ApiUseTags('Config')
@@ -107,10 +108,10 @@ export class ConfigController {
 
   @Get(':id/responses')
   async findResponses(
-    @Param('id') configId: string,
+    @Param('id') configId: number,
     @Query() query: any,
     @Headers('Accept-Language') lang: string,
-  ): Promise<[ConfigResDto[], number]> {
+  ): Promise<[ResponseResDto[], number]> {
     try {
       return await this.configService.findResponses(configId, query);
     } catch (error) {

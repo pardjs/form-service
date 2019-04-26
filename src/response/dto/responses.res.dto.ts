@@ -1,4 +1,5 @@
 import { ApiResponseModelProperty } from '@nestjs/swagger';
+import { ConfigEntity } from '../../config';
 
 interface MailResponse {
   EnvId: string;
@@ -14,7 +15,7 @@ export class ResponseResDto {
   @ApiResponseModelProperty({
     example: 3,
   })
-  config: number;
+  config: ConfigEntity | number;
 
   @ApiResponseModelProperty({
     example: { name: 'clientName', age: '12', hobby: 'footbal' },

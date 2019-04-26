@@ -8,7 +8,7 @@ import { logger } from '@pardjs/common';
 
 import { EnvService } from '../env';
 import { ResponseEntity } from '.';
-import { CreateResponseDto } from './dto';
+import { CreateResponseDto, ResponseResDto } from './dto';
 import { ConfigEntity } from '../config';
 
 @Injectable()
@@ -111,5 +111,26 @@ export class ResponseService {
       logger.error('Failed to send email', { error });
       throw error;
     }
+  }
+
+  async removeOne(responseId: string): Promise<void> {
+    try {
+      await this.responseRepository.delete(responseId);
+      return;
+    } catch (error) {
+      logger.error('Failed to remove response', { error });
+      throw error;
+    }
+  }
+
+  async queryByConfigId(
+    configId: number,
+    params: any,
+  ): Promise<[ResponseResDto[], number]> {
+    return await this.responseRepository.findAndCount({
+      where: { config: configId },
+      take: params.limit || 10,
+      skip: params.skip || 0,
+    });
   }
 }
