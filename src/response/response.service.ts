@@ -14,7 +14,7 @@ import { ResponseEntity } from '.';
 import { CreateResponseDto, ResponseResDto } from './dto';
 import { ConfigEntity } from '../config';
 
-const IGNORE_HOSTS = ['https://servicewechat.com'];
+const IGNORE_HOSTS = ['servicewechat.com'];
 
 @Injectable()
 export class ResponseService {
@@ -88,7 +88,7 @@ export class ResponseService {
       // 验证recaptcha token是否有效
       if (
         configInfo.isReCaptchaRequired &&
-        !IGNORE_HOSTS.includes(url.parse(referer).host)
+        !IGNORE_HOSTS.includes(url.parse(referer).hostname)
       ) {
         if (!data.token) {
           // FIXME: Replace with general error;
