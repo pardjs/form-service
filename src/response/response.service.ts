@@ -152,12 +152,17 @@ export class ResponseService {
 
   async queryByConfigId(
     configId: number,
-    params: any,
-  ): Promise<[ResponseResDto[], number]> {
-    return await this.responseRepository.findAndCount({
+    params: { limit: number; offset: number },
+  ): Promise<{ data: ResponseResDto[]; total: number }> {
+    const [data, total] = await this.responseRepository.findAndCount({
       where: { config: configId },
       take: params.limit || 10,
-      skip: params.skip || 0,
+      skip: params.offset || 0,
     });
+
+    return {
+      data,
+      total,
+    };
   }
 }

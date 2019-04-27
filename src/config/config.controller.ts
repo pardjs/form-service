@@ -17,6 +17,7 @@ import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService } from '.';
 import { httpErrorHandler } from '../uilts';
 import { ResponseResDto } from '../response/dto';
+import { ResponseEntity } from '../response';
 
 @Controller('configs')
 @ApiUseTags('Config')
@@ -30,7 +31,7 @@ export class ConfigController {
   })
   async create(
     @Body() data: UpsertConfigDto,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<ConfigResDto> {
     try {
       const config = await this.configService.create(data);
@@ -48,7 +49,7 @@ export class ConfigController {
   async replaceOne(
     @Param('id') configId: string,
     @Body() data: UpsertConfigDto,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<ConfigResDto> {
     try {
       return await this.configService.replaceOne(configId, data);
@@ -65,7 +66,7 @@ export class ConfigController {
   })
   async find(
     @Param() option: FindManyOptions,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<ConfigResDto[]> {
     try {
       return await this.configService.find(option);
@@ -81,7 +82,7 @@ export class ConfigController {
   })
   async findOne(
     @Param('id') configId: string,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<ConfigResDto> {
     try {
       return await this.configService.findOne(configId);
@@ -96,7 +97,7 @@ export class ConfigController {
   })
   async removeOne(
     @Param('id') configId: string,
-    @Headers('Accept-Language') lang: string,
+    @Headers('Accept-Language') lang?: string,
   ): Promise<void> {
     try {
       await this.configService.removeOne(configId);
@@ -109,9 +110,9 @@ export class ConfigController {
   @Get(':id/responses')
   async findResponses(
     @Param('id') configId: number,
-    @Query() query: any,
-    @Headers('Accept-Language') lang: string,
-  ): Promise<[ResponseResDto[], number]> {
+    @Query() query?: FindManyOptions<ResponseEntity>,
+    @Headers('Accept-Language') lang?: string,
+  ): Promise<{ data: ResponseResDto[]; total: number }> {
     try {
       return await this.configService.findResponses(configId, query);
     } catch (error) {

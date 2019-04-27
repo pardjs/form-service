@@ -117,11 +117,10 @@ export class ConfigService {
     }
   }
 
-  // TODO: pagination
   async findResponses(
     configId: number,
     params: any,
-  ): Promise<[ResponseEntity[], number]> {
+  ): Promise<{ data: ResponseEntity[]; total: number }> {
     return this.responseService.queryByConfigId(configId, params);
   }
 }
