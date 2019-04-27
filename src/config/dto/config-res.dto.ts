@@ -42,6 +42,15 @@ export class ConfigResDto {
   readonly responseSchema?: object;
 
   @ApiResponseModelProperty({
+    example: {
+      name: { title: '姓名', type: 'String' },
+      contact: { title: '联系方式', type: 'Mobile' },
+      message: { title: null, type: 'Text' },
+    },
+  })
+  readonly displaySchema?: object;
+
+  @ApiResponseModelProperty({
     example: ['contact@yakefood.com', 'reply@yakefood.com'],
   })
   readonly notifyMails?: string[];

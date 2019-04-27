@@ -42,6 +42,18 @@ export class UpsertConfigDto {
   readonly responseSchema?: object;
 
   @ApiModelPropertyOptional({
+    description:
+      '用来控制显示的schema，包含显示的名称，以及数据的类型，如`String`,  `Email`, `Mobile`, `Text`, `Number`, `FILE`,`Image`, `Video`',
+    example: {
+      name: { title: '姓名', type: 'String' },
+      contact: { title: '联系方式', type: 'Mobile' },
+      message: { title: null, type: 'Text' },
+    },
+  })
+  @IsOptional()
+  readonly displaySchema?: object;
+
+  @ApiModelPropertyOptional({
     description: '接收通知邮件的列表。',
     example: ['contact@yakefood.com', 'help@yakefood.com'],
   })
