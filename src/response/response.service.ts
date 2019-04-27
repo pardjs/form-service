@@ -1,3 +1,4 @@
+import * as url from 'url';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,6 +13,8 @@ import { EnvService } from '../env';
 import { ResponseEntity } from '.';
 import { CreateResponseDto, ResponseResDto } from './dto';
 import { ConfigEntity } from '../config';
+
+const IGNORE_HOSTS = ['https://servicewechat.com'];
 
 @Injectable()
 export class ResponseService {
@@ -76,14 +79,17 @@ export class ResponseService {
   }
 
   // FIXME: define the type of response
-  async create(data: CreateResponseDto): Promise<any> {
+  async create(data: CreateResponseDto, referer: string): Promise<any> {
     try {
       const configInfo = await this.configRepository.findOne({
         hashId: data.id,
       });
-      // TODO: enable validation reCaptcha by config.
+
       // 验证recaptcha token是否有效
-      if (configInfo.isReCaptchaRequired) {
+      if (
+        configInfo.isReCaptchaRequired &&
+        !IGNORE_HOSTS.includes(url.parse(referer).host)
+      ) {
         if (!data.token) {
           // FIXME: Replace with general error;
           throw new Error('Missing ReCaptcha token');

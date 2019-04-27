@@ -27,11 +27,12 @@ export class ResponseController {
   })
   async create(
     @Body() data: CreateResponseDto,
-    @Headers('Accept-Language') lang?: string,
+    @Headers('accept-language') lang?: string,
+    @Headers('referer') referer?: string,
   ): Promise<ResponseResDto> {
     try {
       logger.info('Submit response', data);
-      const sendRes = await this.responseService.create(data);
+      const sendRes = await this.responseService.create(data, referer);
       return sendRes;
     } catch (error) {
       httpErrorHandler(error, lang);
@@ -44,7 +45,7 @@ export class ResponseController {
   })
   async removeOne(
     @Param('id') responseId: string,
-    @Headers('Accept-Language') lang: string,
+    @Headers('accept-language') lang: string,
   ): Promise<void> {
     try {
       await this.responseService.removeOne(responseId);
