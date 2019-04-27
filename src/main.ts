@@ -1,7 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import { ValidationPipe, HttpExceptionFilter } from '@pardjs/common';
+import {
+  ValidationPipe,
+  HttpExceptionFilter,
+  corsOptions,
+} from '@pardjs/common';
 
 import { AppModule } from './app.module';
 import * as VERSION from '../version.js';
@@ -20,6 +24,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/form-service-api-doc', app, document);
+  app.enableCors(corsOptions);
 
   // 使用通用的数据验证 pipe
   app.useGlobalPipes(new ValidationPipe());
