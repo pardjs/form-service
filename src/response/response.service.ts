@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import Axios from 'axios';
+import * as Handlebars from 'handlebars';
 
 import Recaptcha from '@pardjs/recaptcha-server';
 import Notification from '@pardjs/notification';
@@ -16,6 +18,7 @@ export class ResponseService {
   private readonly recaptcha: Recaptcha;
   private notify: Notification;
   private readonly senderAddress: string;
+  private readonly templatePath: string;
 
   constructor(
     envs: EnvService,
@@ -24,6 +27,7 @@ export class ResponseService {
     @InjectRepository(ResponseEntity)
     private readonly responseRepository: Repository<ResponseEntity>,
   ) {
+    this.templatePath = envs.get('TEMPLATE_PATH');
     this.senderAddress = envs.get('SEND_EMAIL_ADDRESS');
     this.recaptcha = new Recaptcha(envs.get('RECAPTCHA_SECRET'), 3000);
     this.notify = new Notification({
@@ -36,17 +40,37 @@ export class ResponseService {
     });
   }
 
-  buildContent(record: { [key: string]: any }, templateName?: string): string {
+  async buildContent(
+    record: { [key: string]: any },
+    templateName?: string,
+  ): Promise<string> {
     let content: string;
-    if (templateName) {
-      // TODO: load template （html） and build the content.
-    } else {
-      // TODO: send default message
+    let templateUrl: string;
+    let template: string;
+
+    if (this.templatePath && templateName) {
+      templateUrl = this.templatePath + templateName;
     }
 
-    content = Object.keys(record)
-      .map(key => `${key} :${record[key]}`)
-      .join('|');
+    try {
+      const { data: hbsTemplate } = await Axios.get(templateUrl, {
+        responseType: 'text',
+      });
+
+      if (hbsTemplate) {
+        template = Handlebars.compile(hbsTemplate)(record);
+      }
+    } catch (error) {
+      logger.error('Failed to fetch template', { error });
+    }
+
+    if (template) {
+      content = template;
+    } else {
+      content = Object.keys(record)
+        .map(key => `${key} :${record[key]}`)
+        .join('\n');
+    }
 
     return content;
   }
@@ -101,7 +125,10 @@ export class ResponseService {
           senderName: configInfo.senderName || 'Dozto',
           toAddresses: configInfo.notifyMails,
           title: configInfo.mailTitle || '留言通知',
-          content: this.buildContent(record, configInfo.templateName),
+          content: await this.buildContent(
+            Object.assign(record, { id: result.id, title: configInfo.name }),
+            configInfo.templateName,
+          ),
         });
       }
 
