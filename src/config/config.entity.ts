@@ -25,6 +25,9 @@ export class ConfigEntity extends TimeEntity {
   @Column({ name: 'response_schema', type: 'jsonb', nullable: true })
   responseSchema?: object;
 
+  @Column({ name: 'display_schema', type: 'jsonb', nullable: true })
+  displaySchema?: object;
+
   @Column({ name: 'notify_mails', type: 'jsonb', nullable: true })
   notifyMails?: string[];
 
