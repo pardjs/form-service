@@ -1,3 +1,4 @@
+import { FormServiceAuthPoints } from './../auth-points';
 import {
   Controller,
   Body,
@@ -9,9 +10,13 @@ import {
   Put,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { FindManyOptions } from 'typeorm';
+
+import { AuthPointName } from '@pardjs/users-service-common';
+import { AirRolesGuard } from '@pardjs/users-service-sdk';
 
 import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService } from '.';
@@ -29,6 +34,9 @@ export class ConfigController {
     status: HttpStatus.CREATED,
     type: ConfigResDto,
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.CREATE_CONFIG)
+  @UseGuards(AirRolesGuard)
   async create(
     @Body() data: UpsertConfigDto,
     @Headers('Accept-Language') lang?: string,
@@ -46,6 +54,9 @@ export class ConfigController {
     status: HttpStatus.OK,
     type: ConfigResDto,
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.REPLACE_CONFIG)
+  @UseGuards(AirRolesGuard)
   async replaceOne(
     @Param('id') configId: string,
     @Body() data: UpsertConfigDto,
@@ -64,6 +75,9 @@ export class ConfigController {
     isArray: true,
     type: [ConfigResDto],
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.FIND_CONFIGS)
+  @UseGuards(AirRolesGuard)
   async find(
     @Param() option: FindManyOptions,
     @Headers('Accept-Language') lang?: string,
@@ -80,6 +94,9 @@ export class ConfigController {
     status: HttpStatus.OK,
     type: [ConfigResDto],
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.FIND_ONE_CONFIG)
+  @UseGuards(AirRolesGuard)
   async findOne(
     @Param('id') configId: string,
     @Headers('Accept-Language') lang?: string,
@@ -95,6 +112,9 @@ export class ConfigController {
   @ApiResponse({
     status: HttpStatus.OK,
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.REMOVE_CONFIG)
+  @UseGuards(AirRolesGuard)
   async removeOne(
     @Param('id') configId: string,
     @Headers('Accept-Language') lang?: string,
@@ -108,6 +128,9 @@ export class ConfigController {
   }
 
   @Get(':id/responses')
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.FIND_CONFIG_RESPONSES)
+  @UseGuards(AirRolesGuard)
   async findResponses(
     @Param('id') configId: number,
     @Query() query?: FindManyOptions<ResponseEntity>,

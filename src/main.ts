@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
+import { config } from 'dotenv';
+config();
+
 import {
   ValidationPipe,
   HttpExceptionFilter,
@@ -21,6 +24,7 @@ async function bootstrap() {
     .setBasePath(process.env.SERVICE_BASE + '/api')
     .addTag('FormService')
     .setSchemes('http', 'https')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/form-service-api-doc', app, document);
@@ -30,7 +34,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   // 使用通用的错误处理
   app.useGlobalFilters(new HttpExceptionFilter());
-
-  await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
 }
 bootstrap();

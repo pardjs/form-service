@@ -6,14 +6,17 @@ import {
   HttpStatus,
   Delete,
   Param,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
-
+import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthPointName } from '@pardjs/users-service-common';
+import { AirRolesGuard } from '@pardjs/users-service-sdk';
 import { logger } from '@pardjs/common';
 
 import { CreateResponseDto, ResponseResDto } from './dto';
 import { ResponseService, ERRORS } from '.';
 import { httpErrorHandler } from '../utils';
+import { FormServiceAuthPoints } from '../auth-points';
 
 @Controller('responses')
 @ApiUseTags('Response')
@@ -25,6 +28,9 @@ export class ResponseController {
     status: HttpStatus.CREATED,
     type: ResponseResDto,
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.CREATE_RESPONSE)
+  @UseGuards(AirRolesGuard)
   async create(
     @Body() data: CreateResponseDto,
     @Headers('Accept-Language') lang?: string,
@@ -42,6 +48,9 @@ export class ResponseController {
   @ApiResponse({
     status: HttpStatus.OK,
   })
+  @ApiBearerAuth()
+  @AuthPointName(FormServiceAuthPoints.REMOVE_RESPONSE)
+  @UseGuards(AirRolesGuard)
   async removeOne(
     @Param('id') responseId: string,
     @Headers('Accept-Language') lang: string,

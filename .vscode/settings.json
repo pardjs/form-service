@@ -5,6 +5,7 @@
     "nestjs",
     "pardjs",
     "postgres",
+    "prestart",
     "typeorm"
   ]
 }
