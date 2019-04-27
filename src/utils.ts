@@ -18,7 +18,7 @@ export const httpErrorHandler = (error: any, lang = 'zh-CN') => {
   }
 
   if (error.type) {
-    // 如果error有type则认为是pardjs error，为已知错误。
+    // 如果 error 有 type 则认为是 pardjs error，为已知错误。
     throw new HttpException(error, error.status || 400);
   }
   throw new InternalServerErrorException(

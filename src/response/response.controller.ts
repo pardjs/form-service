@@ -13,7 +13,7 @@ import { logger } from '@pardjs/common';
 
 import { CreateResponseDto, ResponseResDto } from './dto';
 import { ResponseService, ERRORS } from '.';
-import { httpErrorHandler } from '../uilts';
+import { httpErrorHandler } from '../utils';
 
 @Controller('responses')
 @ApiUseTags('Response')

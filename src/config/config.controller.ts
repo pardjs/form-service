@@ -15,7 +15,7 @@ import { FindManyOptions } from 'typeorm';
 
 import { UpsertConfigDto, ConfigResDto } from './dto';
 import { ConfigService } from '.';
-import { httpErrorHandler } from '../uilts';
+import { httpErrorHandler } from '../utils';
 import { ResponseResDto } from '../response/dto';
 import { ResponseEntity } from '../response';
 
