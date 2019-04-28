@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 import { config } from 'dotenv';
 config();
@@ -29,7 +30,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/form-service-api-doc', app, document);
   app.enableCors(corsOptions);
-
+  app.use(cookieParser());
   // 使用通用的数据验证 pipe
   app.useGlobalPipes(new ValidationPipe());
   // 使用通用的错误处理

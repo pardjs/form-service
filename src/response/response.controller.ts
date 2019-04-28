@@ -28,9 +28,6 @@ export class ResponseController {
     status: HttpStatus.CREATED,
     type: ResponseResDto,
   })
-  @ApiBearerAuth()
-  @AuthPointName(FormServiceAuthPoints.CREATE_RESPONSE)
-  @UseGuards(AirRolesGuard)
   async create(
     @Body() data: CreateResponseDto,
     @Headers('Accept-Language') lang?: string,
