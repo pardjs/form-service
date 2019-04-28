@@ -1,4 +1,4 @@
 module.exports = {
-  "project": "1.4.2",
+  "project": "1.6.0",
   "api": "1.1.0"
 };
