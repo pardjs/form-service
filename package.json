@@ -34,7 +34,7 @@
     "@pardjs/users-service-sdk": "^0.1.13",
     "@sentry/node": "^5.1.2",
     "cookie-parser": "^1.4.4",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.0.0",
     "handlebars": "^4.1.2",
     "hashids": "^1.2.2",
     "import-modules": "^1.1.0",
