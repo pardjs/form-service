@@ -18,10 +18,16 @@ import {
   ValidationPipe,
   HttpExceptionFilter,
   corsOptions,
+  logger,
 } from '@pardjs/common';
 
 import { AppModule } from './app.module';
-import * as VERSION from '../version.js';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { ProjectConfig } from './interfaces/project-config.interface';
+
+const projectConfig: ProjectConfig = JSON.parse(readFileSync(join(process.cwd(), 'project-config.json')).toString());
+logger.info('project config', { projectConfig });
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,7 +36,7 @@ async function bootstrap() {
     .setTitle('Pardjs Form Service')
     .setDescription('The form service of Pardjs')
     .setContactEmail('contact@dozto.com')
-    .setVersion(VERSION.api)
+    .setVersion(projectConfig.apiVersion)
     .setBasePath(process.env.SERVICE_BASE + '/api')
     .addTag('FormService')
     .setSchemes('http', 'https')
