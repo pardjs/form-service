@@ -1,9 +1,18 @@
+import { config } from 'dotenv';
+config();
+
+import * as Sentry from '@sentry/node';
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    serverName: 'pardjs-form-service',
+  });
+}
+
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-
-import { config } from 'dotenv';
-config();
 
 import {
   ValidationPipe,
