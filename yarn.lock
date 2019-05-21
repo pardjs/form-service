@@ -18,7 +18,7 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@nestjs/common@^6.0.0", "@nestjs/common@^6.0.5":
+"@nestjs/common@^6.0.5":
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.0.5.tgz#2e33ced50e629a5c32df3b9a09efde61d4b5a2df"
   integrity sha512-CbXtgBW/irevfUZF+rURDLFjhmT0Q6dmzbEYkuMg8bSjPmvgG6VzOBG6PwoPZbd+8PrPc2XLjN2A2Hg9mImp7A==
@@ -31,6 +31,15 @@
   version "6.1.1"
   resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-6.1.1.tgz#6f7f0aa0ff45285f9d2b0a66acde1ebeb0c99060"
   integrity sha1-b38KoP9FKF+dKwpmrN4evrDJkGA=
+  dependencies:
+    axios "0.18.0"
+    cli-color "1.4.0"
+    uuid "3.3.2"
+
+"@nestjs/common@^6.2.4":
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.2.4.tgz#ee6ff8b07494ce7242b1e61fb7fae9f64ec963d6"
+  integrity sha512-YZvJ6/S7yVQZK+9rupCzMCg4tpbc9DyVvLoTx0NBDqExTCUNcNEcCtn0AZrO/hLqbeYODnJwGE2NxkH1R/qw+w==
   dependencies:
     axios "0.18.0"
     cli-color "1.4.0"
