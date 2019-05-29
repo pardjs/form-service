@@ -102,10 +102,33 @@
     consola "^2.3.0"
     node-fetch "^2.3.0"
 
-"@pardjs/common@^1.0.2", "@pardjs/common@^1.1.1":
+"@pardjs/common@^1.0.2":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@pardjs/common/-/common-1.1.1.tgz#e1ee3d66dedf661e0b6db7a115f2d12dae9c5d28"
   integrity sha512-xoKP2Jla09TjmpyH/NwZYg4WBBFbnyTp5DO8wQu0kMe7kWOCDxoU5k5cyDGAmAbZk29XjibwOP/gNanBj1oJ7w==
+  dependencies:
+    "@nestjs/common" "^6.0.5"
+    "@nestjs/core" "^6.0.5"
+    "@nestjs/jwt" "^6.0.0"
+    "@nestjs/passport" "^6.0.0"
+    "@nestjs/swagger" "^3.0.2"
+    "@nestjs/typeorm" "^6.0.0"
+    "@types/bcrypt" "^3.0.0"
+    bcrypt "^3.0.6"
+    class-transformer "^0.2.0"
+    class-validator "^0.9.1"
+    dayjs "^1.8.12"
+    express "^4.16.4"
+    node-xlsx "^0.14.1"
+    rxjs "^6.4.0"
+    typeorm "^0.2.16"
+    winston "^3.1.2"
+    winston-daily-rotate-file "^3.8.0"
+
+"@pardjs/common@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@pardjs/common/-/common-1.1.2.tgz#73c9872eca22d71804a65d21c879896b84de4788"
+  integrity sha512-5tUoidcQeJpijXTFCCZOevvg9DJym4uWfbTIbBBGXCtE4uW5pQFRznZfougaPrWr07PROKipGK+PAo35NKZBkQ==
   dependencies:
     "@nestjs/common" "^6.0.5"
     "@nestjs/core" "^6.0.5"
