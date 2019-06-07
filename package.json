@@ -57,7 +57,7 @@
     "coveralls": "^3.0.3",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.15.3",
+    "prettier": "^1.18.1",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.0.3",
