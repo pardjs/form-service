@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { ResponseController, ResponseEntity, ResponseService } from '.';
+import { ConfigEntity } from '../config/config.entity';
 import { EnvModule } from '../env';
-import { ResponseController, ResponseService, ResponseEntity } from '.';
-import { ConfigEntity } from '../config';
 
 @Module({
   imports: [

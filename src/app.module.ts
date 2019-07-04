@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PardjsUsersServiceSdkModule } from '@pardjs/users-service-sdk';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from './config';
+import { ConfigModule } from './config/config.module';
 import { EnvModule } from './env';
 import { ResponseModule } from './response';
 

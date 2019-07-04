@@ -1,5 +1,5 @@
 import { ApiResponseModelProperty } from '@nestjs/swagger';
-import { ConfigEntity } from '../../config';
+import { ConfigEntity } from '../../config/config.entity';
 
 interface MailResponse {
   EnvId: string;

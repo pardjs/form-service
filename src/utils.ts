@@ -1,4 +1,4 @@
-import { InternalServerErrorException, HttpException } from '@nestjs/common';
+import { HttpException, InternalServerErrorException } from '@nestjs/common';
 
 export const ERRORS = {
   UNEXPECTED_ERROR: {

@@ -1,8 +1,11 @@
 {
   "cSpell.words": [
+    "Captcha",
     "Passw",
     "dozto",
+    "envs",
     "hashids",
+    "jsonb",
     "nestjs",
     "pardjs",
     "parens",
@@ -10,6 +13,7 @@
     "prestart",
     "quotemark",
     "recaptcha",
+    "servicewechat",
     "typeorm"
   ]
 }

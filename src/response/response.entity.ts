@@ -1,14 +1,12 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-
 import { EntityParent as TimeEntity } from '@pardjs/common';
-
-import { ConfigEntity } from '../config';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ConfigEntity } from '../config/config.entity';
 
 @Entity()
 export class ResponseEntity extends TimeEntity {

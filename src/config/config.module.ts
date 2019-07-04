@@ -1,9 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { ConfigController, ConfigEntity, ConfigService } from '.';
 import { EnvModule } from '../env';
 import { ResponseModule } from '../response';
+import { ResponseService } from '../response';
+import { ConfigController } from './config.controller';
+import { ConfigEntity } from './config.entity';
+import { ConfigService } from './config.service';
 
 @Module({
   imports: [
@@ -12,6 +14,6 @@ import { ResponseModule } from '../response';
     forwardRef(() => ResponseModule),
   ],
   controllers: [ConfigController],
-  providers: [ConfigService],
+  providers: [ConfigService, ResponseService],
 })
 export class ConfigModule {}

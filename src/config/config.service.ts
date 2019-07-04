@@ -1,14 +1,14 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { logger } from '@pardjs/common';
 import { registerSchema, ValidationSchema } from 'class-validator';
 import Hashids from 'hashids';
 import { FindManyOptions, Repository } from 'typeorm';
-
-import { logger } from '@pardjs/common';
-
-import { ConfigEntity, ERRORS } from '.';
+import { ConfigEntity } from '../config/config.entity';
 import { EnvService } from '../env';
-import { ResponseEntity, ResponseService } from '../response';
+import { ResponseService } from '../response';
+import { ResponseEntity } from '../response/response.entity';
+import { ERRORS } from './config.errors';
 import { UpsertConfigDto } from './dto';
 
 @Injectable()
@@ -20,7 +20,6 @@ export class ConfigService {
     config: EnvService,
     @InjectRepository(ConfigEntity)
     private readonly configRepository: Repository<ConfigEntity>, //
-    @Inject(forwardRef(() => ResponseService))
     private readonly responseService: ResponseService,
   ) {
     // TODO: 拆分到common
