@@ -1,9 +1,8 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { ConfigController, ConfigEntity, ConfigService } from '.';
 import { EnvModule } from '../env';
-
-import { ConfigController, ConfigService, ConfigEntity } from '.';
 import { ResponseModule } from '../response';
 
 @Module({

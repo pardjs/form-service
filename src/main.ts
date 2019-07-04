@@ -2,31 +2,40 @@ import { config } from 'dotenv';
 config();
 
 import * as Sentry from '@sentry/node';
-
 if (process.env.SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    serverName: 'pardjs-form-service',
+    serverName: process.env.SERVICE_NAME || 'pardjs-form-service',
+  });
+}
+
+import { start as startApm } from 'elastic-apm-node';
+if (process.env.ELASTIC_APM_SERVER_URL) {
+  startApm({
+    serviceName: process.env.SERVICE_NAME || 'pardjs-form-service',
+    serverUrl: process.env.ELASTIC_APM_SERVER_URL,
   });
 }
 
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 
 import {
-  ValidationPipe,
-  HttpExceptionFilter,
   corsOptions,
+  HttpExceptionFilter,
   logger,
+  ValidationPipe,
 } from '@pardjs/common';
 
-import { AppModule } from './app.module';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { AppModule } from './app.module';
 import { ProjectConfig } from './interfaces/project-config.interface';
 
-const projectConfig: ProjectConfig = JSON.parse(readFileSync(join(process.cwd(), 'project-config.json')).toString());
+const projectConfig: ProjectConfig = JSON.parse(
+  readFileSync(join(process.cwd(), 'project-config.json')).toString(),
+);
 logger.info('project config', { projectConfig });
 
 async function bootstrap() {

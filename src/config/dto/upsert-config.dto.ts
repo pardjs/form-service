@@ -1,15 +1,15 @@
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import {
-  IsByteLength,
-  IsString,
-  MinLength,
-  MaxLength,
-  IsEmail,
-  IsOptional,
   ArrayMaxSize,
   IsBoolean,
+  IsByteLength,
+  IsEmail,
   IsIn,
+  IsOptional,
+  IsString,
   Matches,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 
 export class UpsertConfigDto {

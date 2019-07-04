@@ -18,7 +18,7 @@ export class ResponseResDto {
   config: ConfigEntity | number;
 
   @ApiResponseModelProperty({
-    example: { name: 'clientName', age: '12', hobby: 'footbal' },
+    example: { name: 'clientName', age: '12', hobby: 'football' },
   })
   content: object;
 

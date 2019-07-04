@@ -1,9 +1,9 @@
 import {
-  Entity,
   Column,
+  Entity,
   Index,
-  PrimaryGeneratedColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { EntityParent as TimeEntity } from '@pardjs/common';

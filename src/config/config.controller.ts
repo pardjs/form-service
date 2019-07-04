@@ -1,27 +1,26 @@
 import {
-  Controller,
   Body,
-  Post,
-  Headers,
+  Controller,
+  Delete,
   Get,
+  Headers,
   HttpStatus,
   Param,
+  Post,
   Put,
-  Delete,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { FindManyOptions } from 'typeorm';
-
+import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { AuthPointName } from '@pardjs/users-service-common';
 import { AirRolesGuard } from '@pardjs/users-service-sdk';
+import { FindManyOptions } from 'typeorm';
 
-import { UpsertConfigDto, ConfigResDto, QueryDto } from './dto';
 import { ConfigService } from '.';
-import { httpErrorHandler } from '../utils';
-import { ResponseResDto } from '../response/dto';
 import { FormServiceAuthPoints } from '../auth-points';
+import { ResponseResDto } from '../response/dto';
+import { httpErrorHandler } from '../utils';
+import { ConfigResDto, QueryDto, UpsertConfigDto } from './dto';
 
 @Controller('configs')
 @ApiUseTags('Config')
