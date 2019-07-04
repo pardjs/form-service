@@ -52,7 +52,10 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/form-service-api-doc', app, document);
+  const docPath = process.env.SERVICE_BASE
+    ? `${process.env.SERVICE_BASE}-api-doc`
+    : '/api-doc';
+  SwaggerModule.setup(docPath, app, document);
   app.enableCors(corsOptions);
   app.use(cookieParser());
   // 使用通用的数据验证 pipe
