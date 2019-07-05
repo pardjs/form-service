@@ -32,7 +32,7 @@
     "@pardjs/recaptcha-server": "^0.2.0",
     "@pardjs/users-service-common": "^0.1.0",
     "@pardjs/users-service-sdk": "^0.1.14",
-    "@sentry/node": "^5.1.2",
+    "@sentry/node": "^5.5.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^7.0.0",
     "elastic-apm-node": "^2.12.0",
