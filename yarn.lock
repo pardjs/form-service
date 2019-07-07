@@ -1696,10 +1696,10 @@ elastic-apm-http-client@^8.0.0:
     stream-chopper "^3.0.1"
     unicode-byte-truncate "^1.0.0"
 
-elastic-apm-node@^2.12.0:
-  version "2.12.0"
-  resolved "https://registry.npm.taobao.org/elastic-apm-node/download/elastic-apm-node-2.12.0.tgz#cbc234905e99b4c6872815ba484662a729306432"
-  integrity sha1-y8I0kF6ZtMaHKBW6SEZipykwZDI=
+elastic-apm-node@^2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/elastic-apm-node/-/elastic-apm-node-2.12.1.tgz#5a0cb3f0112693dacf4078cefc9ebcd1eccf82a3"
+  integrity sha512-QnRoHsNVYy6OBoaAw9GgJVBpIBx3AXSzQc6ZRQxxBwYZQMiw8KEjnMT+rNnBtLTDFZOYXcrEUMqMOvBGZ9oyhg==
   dependencies:
     after-all-results "^2.0.0"
     async-value-promise "^1.1.1"
