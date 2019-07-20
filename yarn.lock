@@ -157,10 +157,10 @@
   dependencies:
     "@nestjs/common" "^6.1.0"
 
-"@pardjs/users-service-sdk@^0.1.14":
-  version "0.1.14"
-  resolved "https://registry.npmjs.org/@pardjs/users-service-sdk/-/users-service-sdk-0.1.14.tgz#933780a13f4c6ee762b3fbedbf4bb2ba1461dde9"
-  integrity sha512-PdNrf7WTrBo44TjxCaTpwluj7/LAMCEDddK09bTLzKrcJ1NuUcoJFHJdTx6mWQUx0s+4cVbeyUoVN6sOadI9Eg==
+"@pardjs/users-service-sdk@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.npmjs.org/@pardjs/users-service-sdk/-/users-service-sdk-0.1.15.tgz#658a3849ae02185087e3813d6a3606d42583f221"
+  integrity sha512-oeb7XxcCsehlaDFlk1oQacLvLnDA/UcdX4O4YfybkhCryIsPRw+7lec3ytHXR0+SG8ogEDNnxlPo018seaByHg==
   dependencies:
     "@nestjs/common" "^6.1.1"
     "@pardjs/common" "^1.0.2"

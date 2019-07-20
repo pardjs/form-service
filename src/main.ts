@@ -46,7 +46,7 @@ async function bootstrap() {
     .setDescription('The form service of Pardjs')
     .setContactEmail('contact@dozto.com')
     .setVersion(projectConfig.apiVersion)
-    .setBasePath(process.env.SERVICE_BASE + '/api')
+    .setBasePath((process.env.SERVICE_BASE || '') + '/api')
     .addTag('FormService')
     .setSchemes('http', 'https')
     .addBearerAuth()
